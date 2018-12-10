@@ -25,11 +25,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ltcsuite/ltcd/chaincfg"
-	"github.com/ltcsuite/ltcd/chaincfg/chainhash"
-	"github.com/ltcsuite/ltcd/database"
-	"github.com/ltcsuite/ltcd/wire"
-	"github.com/ltcsuite/ltcutil"
+	"github.com/qtumatomicswap/qtumd/chaincfg"
+	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
+	"github.com/qtumatomicswap/qtumd/database"
+	"github.com/qtumatomicswap/qtumd/wire"
+	"github.com/qtumatomicswap/qtumutil"
 )
 
 var (
@@ -46,7 +46,7 @@ var (
 
 // loadBlocks loads the blocks contained in the testdata directory and returns
 // a slice of them.
-func loadBlocks(t *testing.T, dataFile string, network wire.BitcoinNet) ([]*ltcutil.Block, error) {
+func loadBlocks(t *testing.T, dataFile string, network wire.BitcoinNet) ([]*qtumutil.Block, error) {
 	// Open the file that contains the blocks for reading.
 	fi, err := os.Open(dataFile)
 	if err != nil {
@@ -62,8 +62,8 @@ func loadBlocks(t *testing.T, dataFile string, network wire.BitcoinNet) ([]*ltcu
 	dr := bzip2.NewReader(fi)
 
 	// Set the first block as the genesis block.
-	blocks := make([]*ltcutil.Block, 0, 256)
-	genesis := ltcutil.NewBlock(chaincfg.MainNetParams.GenesisBlock)
+	blocks := make([]*qtumutil.Block, 0, 256)
+	genesis := qtumutil.NewBlock(chaincfg.MainNetParams.GenesisBlock)
 	blocks = append(blocks, genesis)
 
 	// Load the remaining blocks.
@@ -102,7 +102,7 @@ func loadBlocks(t *testing.T, dataFile string, network wire.BitcoinNet) ([]*ltcu
 		}
 
 		// Deserialize and store the block.
-		block, err := ltcutil.NewBlockFromBytes(blockBytes)
+		block, err := qtumutil.NewBlockFromBytes(blockBytes)
 		if err != nil {
 			t.Errorf("Failed to parse block %v: %v", height, err)
 			return nil, err
@@ -139,7 +139,7 @@ type testContext struct {
 	db          database.DB
 	bucketDepth int
 	isWritable  bool
-	blocks      []*ltcutil.Block
+	blocks      []*qtumutil.Block
 }
 
 // keyPair houses a key/value pair.  It is used over maps so ordering can be

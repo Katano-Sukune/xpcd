@@ -7,8 +7,8 @@ package chaincfg
 import (
 	"time"
 
-	"github.com/ltcsuite/ltcd/chaincfg/chainhash"
-	"github.com/ltcsuite/ltcd/wire"
+	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
+	"github.com/qtumatomicswap/qtumd/wire"
 )
 
 // genesisCoinbaseTx is the coinbase transaction for the genesis blocks for

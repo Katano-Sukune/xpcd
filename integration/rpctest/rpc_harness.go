@@ -15,11 +15,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ltcsuite/ltcd/chaincfg"
-	"github.com/ltcsuite/ltcd/chaincfg/chainhash"
-	"github.com/ltcsuite/ltcd/rpcclient"
-	"github.com/ltcsuite/ltcd/wire"
-	"github.com/ltcsuite/ltcutil"
+	"github.com/qtumatomicswap/qtumd/chaincfg"
+	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
+	"github.com/qtumatomicswap/qtumd/rpcclient"
+	"github.com/qtumatomicswap/qtumd/wire"
+	"github.com/qtumatomicswap/qtumutil"
 )
 
 const (
@@ -64,10 +64,10 @@ var (
 // Harness to exercise functionality.
 type HarnessTestCase func(r *Harness, t *testing.T)
 
-// Harness fully encapsulates an active ltcd process to provide a unified
-// platform for creating rpc driven integration tests involving ltcd. The
-// active ltcd node will typically be run in simnet mode in order to allow for
-// easy generation of test blockchains.  The active ltcd process is fully
+// Harness fully encapsulates an active qtumd process to provide a unified
+// platform for creating rpc driven integration tests involving qtumd. The
+// active qtumd node will typically be run in simnet mode in order to allow for
+// easy generation of test blockchains.  The active qtumd process is fully
 // managed by Harness, which handles the necessary initialization, and teardown
 // of the process along with any temporary directories created as a result.
 // Multiple Harness instances may be run concurrently, in order to allow for
@@ -166,7 +166,7 @@ func New(activeNet *chaincfg.Params, handlers *rpcclient.NotificationHandlers,
 	// callback.
 	if handlers.OnFilteredBlockConnected != nil {
 		obc := handlers.OnFilteredBlockConnected
-		handlers.OnFilteredBlockConnected = func(height int32, header *wire.BlockHeader, filteredTxns []*ltcutil.Tx) {
+		handlers.OnFilteredBlockConnected = func(height int32, header *wire.BlockHeader, filteredTxns []*qtumutil.Tx) {
 			wallet.IngestBlock(height, header, filteredTxns)
 			obc(height, header, filteredTxns)
 		}
@@ -209,7 +209,7 @@ func New(activeNet *chaincfg.Params, handlers *rpcclient.NotificationHandlers,
 // NOTE: This method and TearDown should always be called from the same
 // goroutine as they are not concurrent safe.
 func (h *Harness) SetUp(createTestChain bool, numMatureOutputs uint32) error {
-	// Start the ltcd node itself. This spawns a new process which will be
+	// Start the qtumd node itself. This spawns a new process which will be
 	// managed
 	if err := h.node.start(); err != nil {
 		return err
@@ -222,12 +222,12 @@ func (h *Harness) SetUp(createTestChain bool, numMatureOutputs uint32) error {
 
 	// Filter transactions that pay to the coinbase associated with the
 	// wallet.
-	filterAddrs := []ltcutil.Address{h.wallet.coinbaseAddr}
+	filterAddrs := []qtumutil.Address{h.wallet.coinbaseAddr}
 	if err := h.Node.LoadTxFilter(true, filterAddrs, nil); err != nil {
 		return err
 	}
 
-	// Ensure ltcd properly dispatches our registered call-back for each new
+	// Ensure qtumd properly dispatches our registered call-back for each new
 	// block. Otherwise, the memWallet won't function properly.
 	if err := h.Node.NotifyBlocks(); err != nil {
 		return err
@@ -296,7 +296,7 @@ func (h *Harness) TearDown() error {
 	return h.tearDown()
 }
 
-// connectRPCClient attempts to establish an RPC connection to the created ltcd
+// connectRPCClient attempts to establish an RPC connection to the created qtumd
 // process belonging to this Harness instance. If the initial connection
 // attempt fails, this function will retry h.maxConnRetries times, backing off
 // the time between subsequent attempts. If after h.maxConnRetries attempts,
@@ -328,7 +328,7 @@ func (h *Harness) connectRPCClient() error {
 // wallet.
 //
 // This function is safe for concurrent access.
-func (h *Harness) NewAddress() (ltcutil.Address, error) {
+func (h *Harness) NewAddress() (qtumutil.Address, error) {
 	return h.wallet.NewAddress()
 }
 
@@ -336,7 +336,7 @@ func (h *Harness) NewAddress() (ltcutil.Address, error) {
 // wallet.
 //
 // This function is safe for concurrent access.
-func (h *Harness) ConfirmedBalance() ltcutil.Amount {
+func (h *Harness) ConfirmedBalance() qtumutil.Amount {
 	return h.wallet.ConfirmedBalance()
 }
 
@@ -346,7 +346,7 @@ func (h *Harness) ConfirmedBalance() ltcutil.Amount {
 //
 // This function is safe for concurrent access.
 func (h *Harness) SendOutputs(targetOutputs []*wire.TxOut,
-	feeRate ltcutil.Amount) (*chainhash.Hash, error) {
+	feeRate qtumutil.Amount) (*chainhash.Hash, error) {
 
 	return h.wallet.SendOutputs(targetOutputs, feeRate)
 }
@@ -362,7 +362,7 @@ func (h *Harness) SendOutputs(targetOutputs []*wire.TxOut,
 //
 // This function is safe for concurrent access.
 func (h *Harness) CreateTransaction(targetOutputs []*wire.TxOut,
-	feeRate ltcutil.Amount) (*wire.MsgTx, error) {
+	feeRate qtumutil.Amount) (*wire.MsgTx, error) {
 
 	return h.wallet.CreateTransaction(targetOutputs, feeRate)
 }
@@ -399,8 +399,8 @@ func (h *Harness) P2PAddress() string {
 // blockTime parameter if one doesn't wish to set a custom time.
 //
 // This function is safe for concurrent access.
-func (h *Harness) GenerateAndSubmitBlock(txns []*ltcutil.Tx, blockVersion int32,
-	blockTime time.Time) (*ltcutil.Block, error) {
+func (h *Harness) GenerateAndSubmitBlock(txns []*qtumutil.Tx, blockVersion int32,
+	blockTime time.Time) (*qtumutil.Block, error) {
 	return h.GenerateAndSubmitBlockWithCustomCoinbaseOutputs(txns,
 		blockVersion, blockTime, []wire.TxOut{})
 }
@@ -420,8 +420,8 @@ func (h *Harness) GenerateAndSubmitBlock(txns []*ltcutil.Tx, blockVersion int32,
 //
 // This function is safe for concurrent access.
 func (h *Harness) GenerateAndSubmitBlockWithCustomCoinbaseOutputs(
-	txns []*ltcutil.Tx, blockVersion int32, blockTime time.Time,
-	mineTo []wire.TxOut) (*ltcutil.Block, error) {
+	txns []*qtumutil.Tx, blockVersion int32, blockTime time.Time,
+	mineTo []wire.TxOut) (*qtumutil.Block, error) {
 
 	h.Lock()
 	defer h.Unlock()
@@ -438,7 +438,7 @@ func (h *Harness) GenerateAndSubmitBlockWithCustomCoinbaseOutputs(
 	if err != nil {
 		return nil, err
 	}
-	prevBlock := ltcutil.NewBlock(mBlock)
+	prevBlock := qtumutil.NewBlock(mBlock)
 	prevBlock.SetHeight(prevBlockHeight)
 
 	// Create a new block including the specified transactions

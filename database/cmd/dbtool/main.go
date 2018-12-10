@@ -10,13 +10,13 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/ltcsuite/ltcd/database"
+	"github.com/qtumatomicswap/qtumd/database"
 	"github.com/btcsuite/btclog"
 	flags "github.com/jessevdk/go-flags"
 )
 
 const (
-	// blockDbNamePrefix is the prefix for the ltcd block database.
+	// blockDbNamePrefix is the prefix for the qtumd block database.
 	blockDbNamePrefix = "blocks"
 )
 

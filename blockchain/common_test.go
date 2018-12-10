@@ -14,13 +14,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ltcsuite/ltcd/chaincfg"
-	"github.com/ltcsuite/ltcd/chaincfg/chainhash"
-	"github.com/ltcsuite/ltcd/database"
-	_ "github.com/ltcsuite/ltcd/database/ffldb"
-	"github.com/ltcsuite/ltcd/txscript"
-	"github.com/ltcsuite/ltcd/wire"
-	"github.com/ltcsuite/ltcutil"
+	"github.com/qtumatomicswap/qtumd/chaincfg"
+	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
+	"github.com/qtumatomicswap/qtumd/database"
+	_ "github.com/qtumatomicswap/qtumd/database/ffldb"
+	"github.com/qtumatomicswap/qtumd/txscript"
+	"github.com/qtumatomicswap/qtumd/wire"
+	"github.com/qtumatomicswap/qtumutil"
 )
 
 const (
@@ -59,8 +59,8 @@ func isSupportedDbType(dbType string) bool {
 
 // loadBlocks reads files containing bitcoin block data (gzipped but otherwise
 // in the format bitcoind writes) from disk and returns them as an array of
-// ltcutil.Block.  This is largely borrowed from the test code in ltcdb.
-func loadBlocks(filename string) (blocks []*ltcutil.Block, err error) {
+// qtumutil.Block.  This is largely borrowed from the test code in qtumdb.
+func loadBlocks(filename string) (blocks []*qtumutil.Block, err error) {
 	filename = filepath.Join("testdata/", filename)
 
 	var network = wire.MainNet
@@ -79,7 +79,7 @@ func loadBlocks(filename string) (blocks []*ltcutil.Block, err error) {
 	}
 	defer fi.Close()
 
-	var block *ltcutil.Block
+	var block *qtumutil.Block
 
 	err = nil
 	for height := int64(1); err == nil; height++ {
@@ -105,7 +105,7 @@ func loadBlocks(filename string) (blocks []*ltcutil.Block, err error) {
 		// read block
 		dr.Read(rbytes)
 
-		block, err = ltcutil.NewBlockFromBytes(rbytes)
+		block, err = qtumutil.NewBlockFromBytes(rbytes)
 		if err != nil {
 			return
 		}

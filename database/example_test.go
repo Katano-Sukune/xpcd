@@ -10,11 +10,11 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/ltcsuite/ltcd/chaincfg"
-	"github.com/ltcsuite/ltcd/database"
-	_ "github.com/ltcsuite/ltcd/database/ffldb"
-	"github.com/ltcsuite/ltcd/wire"
-	"github.com/ltcsuite/ltcutil"
+	"github.com/qtumatomicswap/qtumd/chaincfg"
+	"github.com/qtumatomicswap/qtumd/database"
+	_ "github.com/qtumatomicswap/qtumd/database/ffldb"
+	"github.com/qtumatomicswap/qtumd/wire"
+	"github.com/qtumatomicswap/qtumutil"
 )
 
 // This example demonstrates creating a new database.
@@ -22,8 +22,8 @@ func ExampleCreate() {
 	// This example assumes the ffldb driver is imported.
 	//
 	// import (
-	// 	"github.com/ltcsuite/ltcd/database"
-	// 	_ "github.com/ltcsuite/ltcd/database/ffldb"
+	// 	"github.com/qtumatomicswap/qtumd/database"
+	// 	_ "github.com/qtumatomicswap/qtumd/database/ffldb"
 	// )
 
 	// Create a database and schedule it to be closed and removed on exit.
@@ -48,8 +48,8 @@ func Example_basicUsage() {
 	// This example assumes the ffldb driver is imported.
 	//
 	// import (
-	// 	"github.com/ltcsuite/ltcd/database"
-	// 	_ "github.com/ltcsuite/ltcd/database/ffldb"
+	// 	"github.com/qtumatomicswap/qtumd/database"
+	// 	_ "github.com/qtumatomicswap/qtumd/database/ffldb"
 	// )
 
 	// Create a database and schedule it to be closed and removed on exit.
@@ -114,8 +114,8 @@ func Example_blockStorageAndRetrieval() {
 	// This example assumes the ffldb driver is imported.
 	//
 	// import (
-	// 	"github.com/ltcsuite/ltcd/database"
-	// 	_ "github.com/ltcsuite/ltcd/database/ffldb"
+	// 	"github.com/qtumatomicswap/qtumd/database"
+	// 	_ "github.com/qtumatomicswap/qtumd/database/ffldb"
 	// )
 
 	// Create a database and schedule it to be closed and removed on exit.
@@ -136,7 +136,7 @@ func Example_blockStorageAndRetrieval() {
 	// and example.
 	err = db.Update(func(tx database.Tx) error {
 		genesisBlock := chaincfg.MainNetParams.GenesisBlock
-		return tx.StoreBlock(ltcutil.NewBlock(genesisBlock))
+		return tx.StoreBlock(qtumutil.NewBlock(genesisBlock))
 	})
 	if err != nil {
 		fmt.Println(err)

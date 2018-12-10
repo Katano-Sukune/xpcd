@@ -16,7 +16,7 @@ const (
 	fileLimitMin  = 1024
 )
 
-// SetLimits raises some process limits to values which allow ltcd and
+// SetLimits raises some process limits to values which allow qtumd and
 // associated utilities to run.
 func SetLimits() error {
 	var rLimit syscall.Rlimit

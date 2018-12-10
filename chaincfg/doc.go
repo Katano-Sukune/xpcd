@@ -25,8 +25,8 @@
 //          "fmt"
 //          "log"
 //
-//          "github.com/ltcsuite/ltcutil"
-//          "github.com/ltcsuite/ltcd/chaincfg"
+//          "github.com/qtumatomicswap/qtumutil"
+//          "github.com/qtumatomicswap/qtumd/chaincfg"
 //  )
 //
 //  var testnet = flag.Bool("testnet", false, "operate on the testnet Bitcoin network")
@@ -46,7 +46,7 @@
 //
 //          // Create and print new payment address, specific to the active network.
 //          pubKeyHash := make([]byte, 20)
-//          addr, err := ltcutil.NewAddressPubKeyHash(pubKeyHash, chainParams)
+//          addr, err := qtumutil.NewAddressPubKeyHash(pubKeyHash, chainParams)
 //          if err != nil {
 //                  log.Fatal(err)
 //          }

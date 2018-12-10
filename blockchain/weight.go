@@ -7,8 +7,8 @@ package blockchain
 import (
 	"fmt"
 
-	"github.com/ltcsuite/ltcd/txscript"
-	"github.com/ltcsuite/ltcutil"
+	"github.com/qtumatomicswap/qtumd/txscript"
+	"github.com/qtumatomicswap/qtumutil"
 )
 
 const (
@@ -40,7 +40,7 @@ const (
 // Currently the weight metric is simply the sum of the block's serialized size
 // without any witness data scaled proportionally by the WitnessScaleFactor,
 // and the block's serialized size including any witness data.
-func GetBlockWeight(blk *ltcutil.Block) int64 {
+func GetBlockWeight(blk *qtumutil.Block) int64 {
 	msgBlock := blk.MsgBlock()
 
 	baseSize := msgBlock.SerializeSizeStripped()
@@ -55,7 +55,7 @@ func GetBlockWeight(blk *ltcutil.Block) int64 {
 // transactions's serialized size without any witness data scaled
 // proportionally by the WitnessScaleFactor, and the transaction's serialized
 // size including any witness data.
-func GetTransactionWeight(tx *ltcutil.Tx) int64 {
+func GetTransactionWeight(tx *qtumutil.Tx) int64 {
 	msgTx := tx.MsgTx()
 
 	baseSize := msgTx.SerializeSizeStripped()
@@ -71,7 +71,7 @@ func GetTransactionWeight(tx *ltcutil.Tx) int64 {
 // legacy sig op count scaled according to the WitnessScaleFactor, the sig op
 // count for all p2sh inputs scaled by the WitnessScaleFactor, and finally the
 // unscaled sig op count for any inputs spending witness programs.
-func GetSigOpCost(tx *ltcutil.Tx, isCoinBaseTx bool, utxoView *UtxoViewpoint,
+func GetSigOpCost(tx *qtumutil.Tx, isCoinBaseTx bool, utxoView *UtxoViewpoint,
 	bip16, segWit bool) (int, error) {
 
 	numSigOps := CountSigOps(tx) * WitnessScaleFactor

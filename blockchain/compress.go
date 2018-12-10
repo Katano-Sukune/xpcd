@@ -5,8 +5,8 @@
 package blockchain
 
 import (
-	"github.com/ltcsuite/ltcd/btcec"
-	"github.com/ltcsuite/ltcd/txscript"
+	"github.com/qtumatomicswap/qtumd/btcec"
+	"github.com/qtumatomicswap/qtumd/txscript"
 )
 
 // -----------------------------------------------------------------------------

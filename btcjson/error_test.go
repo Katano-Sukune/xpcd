@@ -7,7 +7,7 @@ package btcjson_test
 import (
 	"testing"
 
-	"github.com/ltcsuite/ltcd/btcjson"
+	"github.com/qtumatomicswap/qtumd/btcjson"
 )
 
 // TestErrorCodeStringer tests the stringized output for the ErrorCode type.

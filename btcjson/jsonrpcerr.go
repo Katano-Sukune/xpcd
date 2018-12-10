@@ -77,7 +77,7 @@ const (
 	ErrRPCDecodeHexString   RPCErrorCode = -22
 )
 
-// Errors that are specific to ltcd.
+// Errors that are specific to qtumd.
 const (
 	ErrRPCNoWallet      RPCErrorCode = -1
 	ErrRPCUnimplemented RPCErrorCode = -1

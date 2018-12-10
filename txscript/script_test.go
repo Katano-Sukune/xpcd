@@ -9,7 +9,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/ltcsuite/ltcd/wire"
+	"github.com/qtumatomicswap/qtumd/wire"
 )
 
 // TestParseOpcode tests for opcode parsing with bad data templates.
