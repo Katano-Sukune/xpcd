@@ -2,8 +2,8 @@ package: github.com/qtumatomicswap/qtumd
 import:
 - package: github.com/btcsuite/btclog
 - package: github.com/qtumatomicswap/qtumutil
-  repo: https://github.com/jrick/btcutil
-  version: ltcamounts
+  repo: https://github.com/qtumatomicswap/qtumutil
+  version: qtumamounts
   subpackages:
   - bloom
   - hdkeychain
