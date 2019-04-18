@@ -7,7 +7,7 @@ package blockchain
 import (
 	"math"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
 )
 
 const (

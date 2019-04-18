@@ -1,9 +1,9 @@
-package: github.com/qtumatomicswap/qtumd
+package: github.com/Katano-Sukune/xpcd
 import:
 - package: github.com/btcsuite/btclog
-- package: github.com/qtumatomicswap/qtumutil
-  repo: https://github.com/qtumatomicswap/qtumutil
-  version: qtumamounts
+- package: github.com/Katano-Sukune/xpcutil
+  repo: https://github.com/Katano-Sukune/xpcutil
+  version: xpcamounts
   subpackages:
   - bloom
   - hdkeychain

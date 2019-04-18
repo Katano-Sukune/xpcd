@@ -28,20 +28,20 @@ func dirEmpty(dirPath string) (bool, error) {
 	return len(names) == 0, nil
 }
 
-// oldBtcdHomeDir returns the OS specific home directory qtumd used prior to
-// version 0.3.3.  This has since been replaced with qtumutil.AppDataDir, but
+// oldBtcdHomeDir returns the OS specific home directory xpcd used prior to
+// version 0.3.3.  This has since been replaced with xpcutil.AppDataDir, but
 // this function is still provided for the automatic upgrade path.
 func oldBtcdHomeDir() string {
 	// Search for Windows APPDATA first.  This won't exist on POSIX OSes.
 	appData := os.Getenv("APPDATA")
 	if appData != "" {
-		return filepath.Join(appData, "qtumd")
+		return filepath.Join(appData, "xpcd")
 	}
 
 	// Fall back to standard HOME directory that works for most POSIX OSes.
 	home := os.Getenv("HOME")
 	if home != "" {
-		return filepath.Join(home, ".qtumd")
+		return filepath.Join(home, ".xpcd")
 	}
 
 	// In the worst case, use the current directory.
@@ -49,7 +49,7 @@ func oldBtcdHomeDir() string {
 }
 
 // upgradeDBPathNet moves the database for a specific network from its
-// location prior to qtumd version 0.2.0 and uses heuristics to ascertain the old
+// location prior to xpcd version 0.2.0 and uses heuristics to ascertain the old
 // database type to rename to the new format.
 func upgradeDBPathNet(oldDbPath, netName string) error {
 	// Prior to version 0.2.0, the database was named the same thing for
@@ -88,7 +88,7 @@ func upgradeDBPathNet(oldDbPath, netName string) error {
 	return nil
 }
 
-// upgradeDBPaths moves the databases from their locations prior to qtumd
+// upgradeDBPaths moves the databases from their locations prior to xpcd
 // version 0.2.0 to their new locations.
 func upgradeDBPaths() error {
 	// Prior to version 0.2.0, the databases were in the "db" directory and
@@ -96,15 +96,15 @@ func upgradeDBPaths() error {
 	// respective networks.  Check for the old database and update it to the
 	// new path introduced with version 0.2.0 accordingly.
 	oldDbRoot := filepath.Join(oldBtcdHomeDir(), "db")
-	upgradeDBPathNet(filepath.Join(oldDbRoot, "qtumd.db"), "mainnet")
-	upgradeDBPathNet(filepath.Join(oldDbRoot, "qtumd_testnet.db"), "testnet")
-	upgradeDBPathNet(filepath.Join(oldDbRoot, "qtumd_regtest.db"), "regtest")
+	upgradeDBPathNet(filepath.Join(oldDbRoot, "xpcd.db"), "mainnet")
+	upgradeDBPathNet(filepath.Join(oldDbRoot, "xpcd_testnet.db"), "testnet")
+	upgradeDBPathNet(filepath.Join(oldDbRoot, "xpcd_regtest.db"), "regtest")
 
 	// Remove the old db directory.
 	return os.RemoveAll(oldDbRoot)
 }
 
-// upgradeDataPaths moves the application data from its location prior to qtumd
+// upgradeDataPaths moves the application data from its location prior to xpcd
 // version 0.3.3 to its new location.
 func upgradeDataPaths() error {
 	// No need to migrate if the old and new home paths are the same.
@@ -117,14 +117,14 @@ func upgradeDataPaths() error {
 	// Only migrate if the old path exists and the new one doesn't.
 	if fileExists(oldHomePath) && !fileExists(newHomePath) {
 		// Create the new path.
-		qtumdLog.Infof("Migrating application home path from '%s' to '%s'",
+		xpcdLog.Infof("Migrating application home path from '%s' to '%s'",
 			oldHomePath, newHomePath)
 		err := os.MkdirAll(newHomePath, 0700)
 		if err != nil {
 			return err
 		}
 
-		// Move old qtumd.conf into new location if needed.
+		// Move old xpcd.conf into new location if needed.
 		oldConfPath := filepath.Join(oldHomePath, defaultConfigFilename)
 		newConfPath := filepath.Join(newHomePath, defaultConfigFilename)
 		if fileExists(oldConfPath) && !fileExists(newConfPath) {
@@ -155,7 +155,7 @@ func upgradeDataPaths() error {
 				return err
 			}
 		} else {
-			qtumdLog.Warnf("Not removing '%s' since it contains files "+
+			xpcdLog.Warnf("Not removing '%s' since it contains files "+
 				"not created by this application.  You may "+
 				"want to manually move them or delete them.",
 				oldHomePath)
@@ -165,7 +165,7 @@ func upgradeDataPaths() error {
 	return nil
 }
 
-// doUpgrades performs upgrades to qtumd as new versions require it.
+// doUpgrades performs upgrades to xpcd as new versions require it.
 func doUpgrades() error {
 	err := upgradeDBPaths()
 	if err != nil {

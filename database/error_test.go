@@ -8,7 +8,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/qtumatomicswap/qtumd/database"
+	"github.com/Katano-Sukune/xpcd/database"
 )
 
 // TestErrorCodeStringer tests the stringized output for the ErrorCode type.

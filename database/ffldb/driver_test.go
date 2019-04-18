@@ -12,10 +12,10 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg"
-	"github.com/qtumatomicswap/qtumd/database"
-	"github.com/qtumatomicswap/qtumd/database/ffldb"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/database"
+	"github.com/Katano-Sukune/xpcd/database/ffldb"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 // dbType is the database type name for this driver.
@@ -171,7 +171,7 @@ func TestPersistence(t *testing.T) {
 		"b1key2": "foo2",
 		"b1key3": "foo3",
 	}
-	genesisBlock := qtumutil.NewBlock(chaincfg.MainNetParams.GenesisBlock)
+	genesisBlock := xpcutil.NewBlock(chaincfg.MainNetParams.GenesisBlock)
 	genesisHash := chaincfg.MainNetParams.GenesisHash
 	err = db.Update(func(tx database.Tx) error {
 		metadataBucket := tx.Metadata()

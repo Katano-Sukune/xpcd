@@ -13,16 +13,16 @@ import (
 
 	"github.com/btcsuite/btclog"
 	"github.com/jrick/logrotate/rotator"
-	"github.com/qtumatomicswap/qtumd/addrmgr"
-	"github.com/qtumatomicswap/qtumd/blockchain"
-	"github.com/qtumatomicswap/qtumd/blockchain/indexers"
-	"github.com/qtumatomicswap/qtumd/connmgr"
-	"github.com/qtumatomicswap/qtumd/database"
-	"github.com/qtumatomicswap/qtumd/mempool"
-	"github.com/qtumatomicswap/qtumd/mining"
-	"github.com/qtumatomicswap/qtumd/mining/cpuminer"
-	"github.com/qtumatomicswap/qtumd/peer"
-	"github.com/qtumatomicswap/qtumd/txscript"
+	"github.com/Katano-Sukune/xpcd/addrmgr"
+	"github.com/Katano-Sukune/xpcd/blockchain"
+	"github.com/Katano-Sukune/xpcd/blockchain/indexers"
+	"github.com/Katano-Sukune/xpcd/connmgr"
+	"github.com/Katano-Sukune/xpcd/database"
+	"github.com/Katano-Sukune/xpcd/mempool"
+	"github.com/Katano-Sukune/xpcd/mining"
+	"github.com/Katano-Sukune/xpcd/mining/cpuminer"
+	"github.com/Katano-Sukune/xpcd/peer"
+	"github.com/Katano-Sukune/xpcd/txscript"
 )
 
 // logWriter implements an io.Writer that outputs to both standard output and
@@ -62,7 +62,7 @@ var (
 	cmgrLog = backendLog.Logger("CMGR")
 	bcdbLog = backendLog.Logger("BCDB")
 	bmgrLog = backendLog.Logger("BMGR")
-	qtumdLog = backendLog.Logger("BTCD")
+	xpcdLog = backendLog.Logger("BTCD")
 	chanLog = backendLog.Logger("CHAN")
 	discLog = backendLog.Logger("DISC")
 	indxLog = backendLog.Logger("INDX")
@@ -95,7 +95,7 @@ var subsystemLoggers = map[string]btclog.Logger{
 	"CMGR": cmgrLog,
 	"BCDB": bcdbLog,
 	"BMGR": bmgrLog,
-	"LTCD": qtumdLog,
+	"LTCD": xpcdLog,
 	"CHAN": chanLog,
 	"DISC": discLog,
 	"INDX": indxLog,

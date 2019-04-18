@@ -10,13 +10,13 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/qtumatomicswap/qtumd/database"
+	"github.com/Katano-Sukune/xpcd/database"
 	"github.com/btcsuite/btclog"
 	flags "github.com/jessevdk/go-flags"
 )
 
 const (
-	// blockDbNamePrefix is the prefix for the qtumd block database.
+	// blockDbNamePrefix is the prefix for the xpcd block database.
 	blockDbNamePrefix = "blocks"
 )
 

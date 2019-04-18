@@ -11,7 +11,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/qtumatomicswap/qtumd/btcjson"
+	"github.com/Katano-Sukune/xpcd/btcjson"
 )
 
 // TestWalletSvrWsNtfns tests all of the chain server websocket-specific
@@ -44,14 +44,14 @@ func TestWalletSvrWsNtfns(t *testing.T) {
 			},
 		},
 		{
-			name: "qtumdconnected",
+			name: "xpcdconnected",
 			newNtfn: func() (interface{}, error) {
-				return btcjson.NewCmd("qtumdconnected", true)
+				return btcjson.NewCmd("xpcdconnected", true)
 			},
 			staticNtfn: func() interface{} {
 				return btcjson.NewBtcdConnectedNtfn(true)
 			},
-			marshalled: `{"jsonrpc":"1.0","method":"qtumdconnected","params":[true],"id":null}`,
+			marshalled: `{"jsonrpc":"1.0","method":"xpcdconnected","params":[true],"id":null}`,
 			unmarshalled: &btcjson.BtcdConnectedNtfn{
 				Connected: true,
 			},

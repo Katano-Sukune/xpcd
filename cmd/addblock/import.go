@@ -11,12 +11,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/blockchain"
-	"github.com/qtumatomicswap/qtumd/blockchain/indexers"
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
-	"github.com/qtumatomicswap/qtumd/database"
-	"github.com/qtumatomicswap/qtumd/wire"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/blockchain"
+	"github.com/Katano-Sukune/xpcd/blockchain/indexers"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/database"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 var zeroHash = chainhash.Hash{}
@@ -94,7 +94,7 @@ func (bi *blockImporter) readBlock() ([]byte, error) {
 // with any potential errors.
 func (bi *blockImporter) processBlock(serializedBlock []byte) (bool, error) {
 	// Deserialize the block which includes checks for malformed blocks.
-	block, err := qtumutil.NewBlockFromBytes(serializedBlock)
+	block, err := xpcutil.NewBlockFromBytes(serializedBlock)
 	if err != nil {
 		return false, err
 	}

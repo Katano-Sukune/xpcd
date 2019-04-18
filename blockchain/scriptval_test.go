@@ -9,7 +9,7 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/qtumatomicswap/qtumd/txscript"
+	"github.com/Katano-Sukune/xpcd/txscript"
 )
 
 // TestCheckBlockScripts ensures that validating the all of the scripts in a

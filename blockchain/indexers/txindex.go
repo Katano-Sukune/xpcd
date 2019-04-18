@@ -8,11 +8,11 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/qtumatomicswap/qtumd/blockchain"
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
-	"github.com/qtumatomicswap/qtumd/database"
-	"github.com/qtumatomicswap/qtumd/wire"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/blockchain"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/database"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 const (
@@ -224,7 +224,7 @@ func dbFetchTxIndexEntry(dbTx database.Tx, txHash *chainhash.Hash) (*database.Bl
 
 // dbAddTxIndexEntries uses an existing database transaction to add a
 // transaction index entry for every transaction in the passed block.
-func dbAddTxIndexEntries(dbTx database.Tx, block *qtumutil.Block, blockID uint32) error {
+func dbAddTxIndexEntries(dbTx database.Tx, block *xpcutil.Block, blockID uint32) error {
 	// The offset and length of the transactions within the serialized
 	// block.
 	txLocs, err := block.TxLoc()
@@ -268,7 +268,7 @@ func dbRemoveTxIndexEntry(dbTx database.Tx, txHash *chainhash.Hash) error {
 
 // dbRemoveTxIndexEntries uses an existing database transaction to remove the
 // latest transaction entry for every transaction in the passed block.
-func dbRemoveTxIndexEntries(dbTx database.Tx, block *qtumutil.Block) error {
+func dbRemoveTxIndexEntries(dbTx database.Tx, block *xpcutil.Block) error {
 	for _, tx := range block.Transactions() {
 		err := dbRemoveTxIndexEntry(dbTx, tx.Hash())
 		if err != nil {
@@ -388,7 +388,7 @@ func (idx *TxIndex) Create(dbTx database.Tx) error {
 // for every transaction in the passed block.
 //
 // This is part of the Indexer interface.
-func (idx *TxIndex) ConnectBlock(dbTx database.Tx, block *qtumutil.Block, view *blockchain.UtxoViewpoint) error {
+func (idx *TxIndex) ConnectBlock(dbTx database.Tx, block *xpcutil.Block, view *blockchain.UtxoViewpoint) error {
 	// Increment the internal block ID to use for the block being connected
 	// and add all of the transactions in the block to the index.
 	newBlockID := idx.curBlockID + 1
@@ -411,7 +411,7 @@ func (idx *TxIndex) ConnectBlock(dbTx database.Tx, block *qtumutil.Block, view *
 // hash-to-transaction mapping for every transaction in the block.
 //
 // This is part of the Indexer interface.
-func (idx *TxIndex) DisconnectBlock(dbTx database.Tx, block *qtumutil.Block, view *blockchain.UtxoViewpoint) error {
+func (idx *TxIndex) DisconnectBlock(dbTx database.Tx, block *xpcutil.Block, view *blockchain.UtxoViewpoint) error {
 	// Remove all of the transactions in the block from the index.
 	if err := dbRemoveTxIndexEntries(dbTx, block); err != nil {
 		return err

@@ -7,13 +7,13 @@ package blockchain
 import (
 	"testing"
 
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 // BenchmarkIsCoinBase performs a simple benchmark against the IsCoinBase
 // function.
 func BenchmarkIsCoinBase(b *testing.B) {
-	tx, _ := qtumutil.NewBlock(&Block100000).Tx(1)
+	tx, _ := xpcutil.NewBlock(&Block100000).Tx(1)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		IsCoinBase(tx)

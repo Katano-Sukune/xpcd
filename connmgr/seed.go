@@ -11,8 +11,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg"
-	"github.com/qtumatomicswap/qtumd/wire"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/wire"
 )
 
 const (

@@ -9,7 +9,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/qtumatomicswap/qtumd/wire"
+	"github.com/Katano-Sukune/xpcd/wire"
 )
 
 // TestParseOpcode tests for opcode parsing with bad data templates.

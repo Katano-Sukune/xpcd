@@ -12,12 +12,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/blockchain"
-	"github.com/qtumatomicswap/qtumd/chaincfg"
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
-	"github.com/qtumatomicswap/qtumd/mining"
-	"github.com/qtumatomicswap/qtumd/wire"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/blockchain"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/mining"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 const (
@@ -59,12 +59,12 @@ type Config struct {
 
 	// MiningAddrs is a list of payment addresses to use for the generated
 	// blocks.  Each generated block will randomly choose one of them.
-	MiningAddrs []qtumutil.Address
+	MiningAddrs []xpcutil.Address
 
 	// ProcessBlock defines the function to call with any solved blocks.
 	// It typically must run the provided block through the same set of
 	// rules and handling as any other block coming from the network.
-	ProcessBlock func(*qtumutil.Block, blockchain.BehaviorFlags) (bool, error)
+	ProcessBlock func(*xpcutil.Block, blockchain.BehaviorFlags) (bool, error)
 
 	// ConnectedCount defines the function to use to obtain how many other
 	// peers the server is connected to.  This is used by the automatic
@@ -152,7 +152,7 @@ out:
 
 // submitBlock submits the passed block to network after ensuring it passes all
 // of the consensus validation rules.
-func (m *CPUMiner) submitBlock(block *qtumutil.Block) bool {
+func (m *CPUMiner) submitBlock(block *xpcutil.Block) bool {
 	m.submitBlockLock.Lock()
 	defer m.submitBlockLock.Unlock()
 
@@ -191,7 +191,7 @@ func (m *CPUMiner) submitBlock(block *qtumutil.Block) bool {
 	// The block was accepted.
 	coinbaseTx := block.MsgBlock().Transactions[0].TxOut[0]
 	log.Infof("Block submitted via CPU miner accepted (hash %s, "+
-		"amount %v)", block.Hash(), qtumutil.Amount(coinbaseTx.Value))
+		"amount %v)", block.Hash(), xpcutil.Amount(coinbaseTx.Value))
 	return true
 }
 
@@ -358,7 +358,7 @@ out:
 		// a new block template can be generated.  When the return is
 		// true a solution was found, so submit the solved block.
 		if m.solveBlock(template.Block, curHeight+1, ticker, quit) {
-			block := qtumutil.NewBlock(template.Block)
+			block := xpcutil.NewBlock(template.Block)
 			m.submitBlock(block)
 		}
 	}
@@ -612,7 +612,7 @@ func (m *CPUMiner) GenerateNBlocks(n uint32) ([]*chainhash.Hash, error) {
 		// a new block template can be generated.  When the return is
 		// true a solution was found, so submit the solved block.
 		if m.solveBlock(template.Block, curHeight+1, ticker, nil) {
-			block := qtumutil.NewBlock(template.Block)
+			block := xpcutil.NewBlock(template.Block)
 			m.submitBlock(block)
 			blockHashes[i] = block.Hash()
 			i++

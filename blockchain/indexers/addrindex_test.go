@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/qtumatomicswap/qtumd/wire"
+	"github.com/Katano-Sukune/xpcd/wire"
 )
 
 // addrIndexBucket provides a mock address index database bucket by implementing

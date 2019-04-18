@@ -15,9 +15,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
-	"github.com/qtumatomicswap/qtumd/wire"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 // scriptTestName returns a descriptive test name for the given reference script
@@ -347,7 +347,7 @@ func testScripts(t *testing.T, tests [][]interface{}, useSigCache bool) {
 
 		var (
 			witness  wire.TxWitness
-			inputAmt qtumutil.Amount
+			inputAmt xpcutil.Amount
 		)
 
 		// When the first field of the test data is a slice it contains
@@ -367,7 +367,7 @@ func testScripts(t *testing.T, tests [][]interface{}, useSigCache bool) {
 				continue
 			}
 
-			inputAmt, err = qtumutil.NewAmount(witnessData[len(witnessData)-1].(float64))
+			inputAmt, err = xpcutil.NewAmount(witnessData[len(witnessData)-1].(float64))
 			if err != nil {
 				t.Errorf("%s: can't parse input amt: %v",
 					name, err)
@@ -547,7 +547,7 @@ testloop:
 			continue
 		}
 
-		tx, err := qtumutil.NewTxFromBytes(serializedTx)
+		tx, err := xpcutil.NewTxFromBytes(serializedTx)
 		if err != nil {
 			t.Errorf("bad test (arg 2 not msgtx %v) %d: %v", err,
 				i, test)
@@ -702,7 +702,7 @@ testloop:
 			continue
 		}
 
-		tx, err := qtumutil.NewTxFromBytes(serializedTx)
+		tx, err := xpcutil.NewTxFromBytes(serializedTx)
 		if err != nil {
 			t.Errorf("bad test (arg 2 not msgtx %v) %d: %v", err,
 				i, test)

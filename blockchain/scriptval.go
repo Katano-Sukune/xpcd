@@ -10,16 +10,16 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/txscript"
-	"github.com/qtumatomicswap/qtumd/wire"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/txscript"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 // txValidateItem holds a transaction along with which input to validate.
 type txValidateItem struct {
 	txInIndex int
 	txIn      *wire.TxIn
-	tx        *qtumutil.Tx
+	tx        *xpcutil.Tx
 	sigHashes *txscript.TxSigHashes
 }
 
@@ -202,7 +202,7 @@ func newTxValidator(utxoView *UtxoViewpoint, flags txscript.ScriptFlags,
 
 // ValidateTransactionScripts validates the scripts for the passed transaction
 // using multiple goroutines.
-func ValidateTransactionScripts(tx *qtumutil.Tx, utxoView *UtxoViewpoint,
+func ValidateTransactionScripts(tx *xpcutil.Tx, utxoView *UtxoViewpoint,
 	flags txscript.ScriptFlags, sigCache *txscript.SigCache,
 	hashCache *txscript.HashCache) error {
 
@@ -254,7 +254,7 @@ func ValidateTransactionScripts(tx *qtumutil.Tx, utxoView *UtxoViewpoint,
 
 // checkBlockScripts executes and validates the scripts for all transactions in
 // the passed block using multiple goroutines.
-func checkBlockScripts(block *qtumutil.Block, utxoView *UtxoViewpoint,
+func checkBlockScripts(block *xpcutil.Block, utxoView *UtxoViewpoint,
 	scriptFlags txscript.ScriptFlags, sigCache *txscript.SigCache,
 	hashCache *txscript.HashCache) error {
 

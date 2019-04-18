@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/qtumatomicswap/qtumd/database"
-	_ "github.com/qtumatomicswap/qtumd/database/ffldb"
+	"github.com/Katano-Sukune/xpcd/database"
+	_ "github.com/Katano-Sukune/xpcd/database/ffldb"
 )
 
 var (

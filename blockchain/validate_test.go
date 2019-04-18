@@ -10,10 +10,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg"
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
-	"github.com/qtumatomicswap/qtumd/wire"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 // TestSequenceLocksActive tests the SequenceLockActive function to ensure it
@@ -77,7 +77,7 @@ func TestCheckConnectBlock(t *testing.T) {
 
 	// The genesis block should fail to connect since it's already inserted.
 	genesisBlock := chaincfg.MainNetParams.GenesisBlock
-	err = chain.CheckConnectBlock(qtumutil.NewBlock(genesisBlock))
+	err = chain.CheckConnectBlock(xpcutil.NewBlock(genesisBlock))
 	if err == nil {
 		t.Errorf("CheckConnectBlock: Did not received expected error")
 	}
@@ -87,7 +87,7 @@ func TestCheckConnectBlock(t *testing.T) {
 // as expected.
 func TestCheckBlockSanity(t *testing.T) {
 	powLimit := chaincfg.MainNetParams.PowLimit
-	block := qtumutil.NewBlock(&Block100000)
+	block := xpcutil.NewBlock(&Block100000)
 	timeSource := NewMedianTime()
 	err := CheckBlockSanity(block, powLimit, timeSource)
 	if err != nil {
@@ -148,7 +148,7 @@ func TestCheckSerializedHeight(t *testing.T) {
 	for i, test := range tests {
 		msgTx := coinbaseTx.Copy()
 		msgTx.TxIn[0].SignatureScript = test.sigScript
-		tx := qtumutil.NewTx(msgTx)
+		tx := xpcutil.NewTx(msgTx)
 
 		err := checkSerializedHeight(tx, test.wantHeight)
 		if reflect.TypeOf(err) != reflect.TypeOf(test.err) {

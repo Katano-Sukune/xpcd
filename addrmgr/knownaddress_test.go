@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/addrmgr"
-	"github.com/qtumatomicswap/qtumd/wire"
+	"github.com/Katano-Sukune/xpcd/addrmgr"
+	"github.com/Katano-Sukune/xpcd/wire"
 )
 
 func TestChance(t *testing.T) {

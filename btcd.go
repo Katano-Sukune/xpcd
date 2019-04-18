@@ -15,25 +15,25 @@ import (
 	"runtime/debug"
 	"runtime/pprof"
 
-	"github.com/qtumatomicswap/qtumd/blockchain/indexers"
-	"github.com/qtumatomicswap/qtumd/database"
-	"github.com/qtumatomicswap/qtumd/limits"
+	"github.com/Katano-Sukune/xpcd/blockchain/indexers"
+	"github.com/Katano-Sukune/xpcd/database"
+	"github.com/Katano-Sukune/xpcd/limits"
 )
 
 var (
 	cfg *config
 )
 
-// winServiceMain is only invoked on Windows.  It detects when qtumd is running
+// winServiceMain is only invoked on Windows.  It detects when xpcd is running
 // as a service and reacts accordingly.
 var winServiceMain func() (bool, error)
 
-// qtumdMain is the real main function for qtumd.  It is necessary to work around
+// xpcdMain is the real main function for xpcd.  It is necessary to work around
 // the fact that deferred functions do not run when os.Exit() is called.  The
 // optional serverChan parameter is mainly used by the service code to be
 // notified with the server once it is setup so it can gracefully stop it when
 // requested from the service control manager.
-func qtumdMain(serverChan chan<- *server) error {
+func xpcdMain(serverChan chan<- *server) error {
 	// Load configuration and parse command line.  This function also
 	// initializes logging and configures it accordingly.
 	tcfg, _, err := loadConfig()
@@ -51,20 +51,20 @@ func qtumdMain(serverChan chan<- *server) error {
 	// triggered either from an OS signal such as SIGINT (Ctrl+C) or from
 	// another subsystem such as the RPC server.
 	interruptedChan := interruptListener()
-	defer qtumdLog.Info("Shutdown complete")
+	defer xpcdLog.Info("Shutdown complete")
 
 	// Show version at startup.
-	qtumdLog.Infof("Version %s", version())
+	xpcdLog.Infof("Version %s", version())
 
 	// Enable http profiling server if requested.
 	if cfg.Profile != "" {
 		go func() {
 			listenAddr := net.JoinHostPort("", cfg.Profile)
-			qtumdLog.Infof("Profile server listening on %s", listenAddr)
+			xpcdLog.Infof("Profile server listening on %s", listenAddr)
 			profileRedirect := http.RedirectHandler("/debug/pprof",
 				http.StatusSeeOther)
 			http.Handle("/", profileRedirect)
-			qtumdLog.Errorf("%v", http.ListenAndServe(listenAddr, nil))
+			xpcdLog.Errorf("%v", http.ListenAndServe(listenAddr, nil))
 		}()
 	}
 
@@ -72,7 +72,7 @@ func qtumdMain(serverChan chan<- *server) error {
 	if cfg.CPUProfile != "" {
 		f, err := os.Create(cfg.CPUProfile)
 		if err != nil {
-			qtumdLog.Errorf("Unable to create cpu profile: %v", err)
+			xpcdLog.Errorf("Unable to create cpu profile: %v", err)
 			return err
 		}
 		pprof.StartCPUProfile(f)
@@ -80,9 +80,9 @@ func qtumdMain(serverChan chan<- *server) error {
 		defer pprof.StopCPUProfile()
 	}
 
-	// Perform upgrades to qtumd as new versions require it.
+	// Perform upgrades to xpcd as new versions require it.
 	if err := doUpgrades(); err != nil {
-		qtumdLog.Errorf("%v", err)
+		xpcdLog.Errorf("%v", err)
 		return err
 	}
 
@@ -94,12 +94,12 @@ func qtumdMain(serverChan chan<- *server) error {
 	// Load the block database.
 	db, err := loadBlockDB()
 	if err != nil {
-		qtumdLog.Errorf("%v", err)
+		xpcdLog.Errorf("%v", err)
 		return err
 	}
 	defer func() {
 		// Ensure the database is sync'd and closed on shutdown.
-		qtumdLog.Infof("Gracefully shutting down the database...")
+		xpcdLog.Infof("Gracefully shutting down the database...")
 		db.Close()
 	}()
 
@@ -114,7 +114,7 @@ func qtumdMain(serverChan chan<- *server) error {
 	// drops the address index since it relies on it.
 	if cfg.DropAddrIndex {
 		if err := indexers.DropAddrIndex(db); err != nil {
-			qtumdLog.Errorf("%v", err)
+			xpcdLog.Errorf("%v", err)
 			return err
 		}
 
@@ -122,7 +122,7 @@ func qtumdMain(serverChan chan<- *server) error {
 	}
 	if cfg.DropTxIndex {
 		if err := indexers.DropTxIndex(db); err != nil {
-			qtumdLog.Errorf("%v", err)
+			xpcdLog.Errorf("%v", err)
 			return err
 		}
 
@@ -130,7 +130,7 @@ func qtumdMain(serverChan chan<- *server) error {
 	}
 	if cfg.DropCfIndex {
 		if err := indexers.DropCfIndex(db); err != nil {
-			qtumdLog.Errorf("%v", err)
+			xpcdLog.Errorf("%v", err)
 			return err
 		}
 
@@ -141,12 +141,12 @@ func qtumdMain(serverChan chan<- *server) error {
 	server, err := newServer(cfg.Listeners, db, activeNetParams.Params)
 	if err != nil {
 		// TODO: this logging could do with some beautifying.
-		qtumdLog.Errorf("Unable to start server on %v: %v",
+		xpcdLog.Errorf("Unable to start server on %v: %v",
 			cfg.Listeners, err)
 		return err
 	}
 	defer func() {
-		qtumdLog.Infof("Gracefully shutting down the server...")
+		xpcdLog.Infof("Gracefully shutting down the server...")
 		server.Stop()
 		server.WaitForShutdown()
 		srvrLog.Infof("Server shutdown complete")
@@ -174,7 +174,7 @@ func removeRegressionDB(dbPath string) error {
 	// Remove the old regression test database if it already exists.
 	fi, err := os.Stat(dbPath)
 	if err == nil {
-		qtumdLog.Infof("Removing regression test database from '%s'", dbPath)
+		xpcdLog.Infof("Removing regression test database from '%s'", dbPath)
 		if fi.IsDir() {
 			err := os.RemoveAll(dbPath)
 			if err != nil {
@@ -226,7 +226,7 @@ func warnMultipeDBs() {
 	// Warn if there are extra databases.
 	if len(duplicateDbPaths) > 0 {
 		selectedDbPath := blockDbPath(cfg.DbType)
-		qtumdLog.Warnf("WARNING: There are multiple block chain databases "+
+		xpcdLog.Warnf("WARNING: There are multiple block chain databases "+
 			"using different database types.\nYou probably don't "+
 			"want to waste disk space by having more than one.\n"+
 			"Your current database is located at [%v].\nThe "+
@@ -245,7 +245,7 @@ func loadBlockDB() (database.DB, error) {
 	// handle it uniquely.  We also don't want to worry about the multiple
 	// database type warnings when running with the memory database.
 	if cfg.DbType == "memdb" {
-		qtumdLog.Infof("Creating block database in memory.")
+		xpcdLog.Infof("Creating block database in memory.")
 		db, err := database.Create(cfg.DbType)
 		if err != nil {
 			return nil, err
@@ -262,7 +262,7 @@ func loadBlockDB() (database.DB, error) {
 	// each run, so remove it now if it already exists.
 	removeRegressionDB(dbPath)
 
-	qtumdLog.Infof("Loading block database from '%s'", dbPath)
+	xpcdLog.Infof("Loading block database from '%s'", dbPath)
 	db, err := database.Open(cfg.DbType, dbPath, activeNetParams.Net)
 	if err != nil {
 		// Return the error if it's not because the database doesn't
@@ -284,7 +284,7 @@ func loadBlockDB() (database.DB, error) {
 		}
 	}
 
-	qtumdLog.Info("Block database loaded")
+	xpcdLog.Info("Block database loaded")
 	return db, nil
 }
 
@@ -319,7 +319,7 @@ func main() {
 	}
 
 	// Work around defer not working after os.Exit()
-	if err := qtumdMain(nil); err != nil {
+	if err := xpcdMain(nil); err != nil {
 		os.Exit(1)
 	}
 }

@@ -7,12 +7,12 @@ package main
 import (
 	"sync/atomic"
 
-	"github.com/qtumatomicswap/qtumd/blockchain"
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
-	"github.com/qtumatomicswap/qtumd/mempool"
-	"github.com/qtumatomicswap/qtumd/peer"
-	"github.com/qtumatomicswap/qtumd/wire"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/blockchain"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/mempool"
+	"github.com/Katano-Sukune/xpcd/peer"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 // rpcPeer provides a peer for use with the RPC server and implements the
@@ -246,7 +246,7 @@ func (b *rpcSyncMgr) IsCurrent() bool {
 //
 // This function is safe for concurrent access and is part of the
 // rpcserverSyncManager interface implementation.
-func (b *rpcSyncMgr) SubmitBlock(block *qtumutil.Block, flags blockchain.BehaviorFlags) (bool, error) {
+func (b *rpcSyncMgr) SubmitBlock(block *xpcutil.Block, flags blockchain.BehaviorFlags) (bool, error) {
 	return b.blockMgr.ProcessBlock(block, flags)
 }
 

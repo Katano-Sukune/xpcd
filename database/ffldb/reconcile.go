@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"hash/crc32"
 
-	"github.com/qtumatomicswap/qtumd/database"
+	"github.com/Katano-Sukune/xpcd/database"
 )
 
 // The serialized write cursor location format is:

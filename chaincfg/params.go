@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
-	"github.com/qtumatomicswap/qtumd/wire"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/wire"
 )
 
 // These variables are the chain proof-of-work limit parameters for each default

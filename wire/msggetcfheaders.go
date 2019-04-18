@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
 )
 
 // MsgGetCFHeaders is a message similar to MsgGetHeaders, but for committed

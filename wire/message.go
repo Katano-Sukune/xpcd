@@ -10,7 +10,7 @@ import (
 	"io"
 	"unicode/utf8"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
 )
 
 // MessageHeaderSize is the number of bytes in a bitcoin message header.

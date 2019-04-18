@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
 )
 
 // maxFlagsPerMerkleBlock is the maximum number of flag bytes that could

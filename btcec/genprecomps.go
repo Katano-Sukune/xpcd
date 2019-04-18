@@ -17,7 +17,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/qtumatomicswap/qtumd/btcec"
+	"github.com/Katano-Sukune/xpcd/btcec"
 )
 
 func main() {

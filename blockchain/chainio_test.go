@@ -11,9 +11,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
-	"github.com/qtumatomicswap/qtumd/database"
-	"github.com/qtumatomicswap/qtumd/wire"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/database"
+	"github.com/Katano-Sukune/xpcd/wire"
 )
 
 // TestErrNotInMainChain ensures the functions related to errNotInMainChain work

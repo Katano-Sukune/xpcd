@@ -7,7 +7,7 @@ package wire
 import (
 	"io"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
 )
 
 type MsgGetCFilter struct {

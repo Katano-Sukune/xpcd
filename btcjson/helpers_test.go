@@ -8,7 +8,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/qtumatomicswap/qtumd/btcjson"
+	"github.com/Katano-Sukune/xpcd/btcjson"
 )
 
 // TestHelpers tests the various helper functions which create pointers to

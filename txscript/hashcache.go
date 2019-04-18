@@ -7,8 +7,8 @@ package txscript
 import (
 	"sync"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
-	"github.com/qtumatomicswap/qtumd/wire"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/wire"
 )
 
 // TxSigHashes houses the partial set of sighashes introduced within BIP0143.

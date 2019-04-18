@@ -8,7 +8,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/qtumatomicswap/qtumd/btcjson"
+	"github.com/Katano-Sukune/xpcd/btcjson"
 )
 
 // TestCmdMethod tests the CmdMethod function to ensure it retunrs the expected

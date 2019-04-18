@@ -8,7 +8,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/qtumatomicswap/qtumd/btcjson"
+	"github.com/Katano-Sukune/xpcd/btcjson"
 )
 
 // TestChainSvrCustomResults ensures any results that have custom marshalling

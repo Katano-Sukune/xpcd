@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/qtumatomicswap/qtumd/wire"
+	"github.com/Katano-Sukune/xpcd/wire"
 )
 
 var (

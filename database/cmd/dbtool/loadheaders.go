@@ -7,8 +7,8 @@ package main
 import (
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
-	"github.com/qtumatomicswap/qtumd/database"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/database"
 )
 
 // headersCmd defines the configuration options for the loadheaders command.

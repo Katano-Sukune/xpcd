@@ -11,12 +11,12 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/blockchain"
-	"github.com/qtumatomicswap/qtumd/chaincfg"
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
-	"github.com/qtumatomicswap/qtumd/txscript"
-	"github.com/qtumatomicswap/qtumd/wire"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/blockchain"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/txscript"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 // solveBlock attempts to find a nonce which makes the passed block header hash
@@ -88,8 +88,8 @@ func standardCoinbaseScript(nextBlockHeight int32, extraNonce uint64) ([]byte, e
 // createCoinbaseTx returns a coinbase transaction paying an appropriate
 // subsidy based on the passed block height to the provided address.
 func createCoinbaseTx(coinbaseScript []byte, nextBlockHeight int32,
-	addr qtumutil.Address, mineTo []wire.TxOut,
-	net *chaincfg.Params) (*qtumutil.Tx, error) {
+	addr xpcutil.Address, mineTo []wire.TxOut,
+	net *chaincfg.Params) (*xpcutil.Tx, error) {
 
 	// Create the script to pay to the provided payment address.
 	pkScript, err := txscript.PayToAddrScript(addr)
@@ -116,7 +116,7 @@ func createCoinbaseTx(coinbaseScript []byte, nextBlockHeight int32,
 			tx.AddTxOut(&mineTo[i])
 		}
 	}
-	return qtumutil.NewTx(tx), nil
+	return xpcutil.NewTx(tx), nil
 }
 
 // CreateBlock creates a new block building from the previous block with a
@@ -124,9 +124,9 @@ func createCoinbaseTx(coinbaseScript []byte, nextBlockHeight int32,
 // initialized), then the timestamp of the previous block will be used plus 1
 // second is used. Passing nil for the previous block results in a block that
 // builds off of the genesis block for the specified chain.
-func CreateBlock(prevBlock *qtumutil.Block, inclusionTxs []*qtumutil.Tx,
-	blockVersion int32, blockTime time.Time, miningAddr qtumutil.Address,
-	mineTo []wire.TxOut, net *chaincfg.Params) (*qtumutil.Block, error) {
+func CreateBlock(prevBlock *xpcutil.Block, inclusionTxs []*xpcutil.Tx,
+	blockVersion int32, blockTime time.Time, miningAddr xpcutil.Address,
+	mineTo []wire.TxOut, net *chaincfg.Params) (*xpcutil.Block, error) {
 
 	var (
 		prevHash      *chainhash.Hash
@@ -169,7 +169,7 @@ func CreateBlock(prevBlock *qtumutil.Block, inclusionTxs []*qtumutil.Tx,
 	}
 
 	// Create a new block ready to be solved.
-	blockTxns := []*qtumutil.Tx{coinbaseTx}
+	blockTxns := []*xpcutil.Tx{coinbaseTx}
 	if inclusionTxs != nil {
 		blockTxns = append(blockTxns, inclusionTxs...)
 	}
@@ -193,7 +193,7 @@ func CreateBlock(prevBlock *qtumutil.Block, inclusionTxs []*qtumutil.Tx,
 		return nil, errors.New("Unable to solve block")
 	}
 
-	utilBlock := qtumutil.NewBlock(&block)
+	utilBlock := xpcutil.NewBlock(&block)
 	utilBlock.SetHeight(blockHeight)
 	return utilBlock, nil
 }

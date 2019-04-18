@@ -7,12 +7,12 @@ package blockchain
 import (
 	"testing"
 
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 // TestMerkle tests the BuildMerkleTreeStore API.
 func TestMerkle(t *testing.T) {
-	block := qtumutil.NewBlock(&Block100000)
+	block := xpcutil.NewBlock(&Block100000)
 	merkles := BuildMerkleTreeStore(block.Transactions(), false)
 	calculatedMerkleRoot := merkles[len(merkles)-1]
 	wantMerkle := &Block100000.Header.MerkleRoot

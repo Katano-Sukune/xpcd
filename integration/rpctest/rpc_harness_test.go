@@ -13,15 +13,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg"
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
-	"github.com/qtumatomicswap/qtumd/txscript"
-	"github.com/qtumatomicswap/qtumd/wire"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/txscript"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 func testSendOutputs(r *Harness, t *testing.T) {
-	genSpend := func(amt qtumutil.Amount) *chainhash.Hash {
+	genSpend := func(amt xpcutil.Amount) *chainhash.Hash {
 		// Grab a fresh address from the wallet.
 		addr, err := r.NewAddress()
 		if err != nil {
@@ -63,7 +63,7 @@ func testSendOutputs(r *Harness, t *testing.T) {
 
 	// First, generate a small spend which will require only a single
 	// input.
-	txid := genSpend(qtumutil.Amount(5 * qtumutil.SatoshiPerBitcoin))
+	txid := genSpend(xpcutil.Amount(5 * xpcutil.SatoshiPerBitcoin))
 
 	// Generate a single block, the transaction the wallet created should
 	// be found in this block.
@@ -75,7 +75,7 @@ func testSendOutputs(r *Harness, t *testing.T) {
 
 	// Next, generate a spend much greater than the block reward. This
 	// transaction should also have been mined properly.
-	txid = genSpend(qtumutil.Amount(500 * qtumutil.SatoshiPerBitcoin))
+	txid = genSpend(xpcutil.Amount(500 * xpcutil.SatoshiPerBitcoin))
 	blockHashes, err = r.Node.Generate(1)
 	if err != nil {
 		t.Fatalf("unable to generate single block: %v", err)
@@ -335,17 +335,17 @@ func testGenerateAndSubmitBlock(r *Harness, t *testing.T) {
 	if err != nil {
 		t.Fatalf("unable to create script: %v", err)
 	}
-	output := wire.NewTxOut(qtumutil.SatoshiPerBitcoin, pkScript)
+	output := wire.NewTxOut(xpcutil.SatoshiPerBitcoin, pkScript)
 
 	const numTxns = 5
-	txns := make([]*qtumutil.Tx, 0, numTxns)
+	txns := make([]*xpcutil.Tx, 0, numTxns)
 	for i := 0; i < numTxns; i++ {
 		tx, err := r.CreateTransaction([]*wire.TxOut{output}, 10)
 		if err != nil {
 			t.Fatalf("unable to create tx: %v", err)
 		}
 
-		txns = append(txns, qtumutil.NewTx(tx))
+		txns = append(txns, xpcutil.NewTx(tx))
 	}
 
 	// Now generate a block with the default block version, and a zero'd
@@ -402,17 +402,17 @@ func testGenerateAndSubmitBlockWithCustomCoinbaseOutputs(r *Harness,
 	if err != nil {
 		t.Fatalf("unable to create script: %v", err)
 	}
-	output := wire.NewTxOut(qtumutil.SatoshiPerBitcoin, pkScript)
+	output := wire.NewTxOut(xpcutil.SatoshiPerBitcoin, pkScript)
 
 	const numTxns = 5
-	txns := make([]*qtumutil.Tx, 0, numTxns)
+	txns := make([]*xpcutil.Tx, 0, numTxns)
 	for i := 0; i < numTxns; i++ {
 		tx, err := r.CreateTransaction([]*wire.TxOut{output}, 10)
 		if err != nil {
 			t.Fatalf("unable to create tx: %v", err)
 		}
 
-		txns = append(txns, qtumutil.NewTx(tx))
+		txns = append(txns, xpcutil.NewTx(tx))
 	}
 
 	// Now generate a block with the default block version, a zero'd out
@@ -479,7 +479,7 @@ func testMemWalletReorg(r *Harness, t *testing.T) {
 	defer harness.TearDown()
 
 	// The internal wallet of this harness should now have 250 BTC.
-	expectedBalance := qtumutil.Amount(250 * qtumutil.SatoshiPerBitcoin)
+	expectedBalance := xpcutil.Amount(250 * xpcutil.SatoshiPerBitcoin)
 	walletBalance := harness.ConfirmedBalance()
 	if expectedBalance != walletBalance {
 		t.Fatalf("wallet balance incorrect: expected %v, got %v",
@@ -499,7 +499,7 @@ func testMemWalletReorg(r *Harness, t *testing.T) {
 	// The original wallet should now have a balance of 0 BTC as its entire
 	// chain should have been decimated in favor of the main harness'
 	// chain.
-	expectedBalance = qtumutil.Amount(0)
+	expectedBalance = xpcutil.Amount(0)
 	walletBalance = harness.ConfirmedBalance()
 	if expectedBalance != walletBalance {
 		t.Fatalf("wallet balance incorrect: expected %v, got %v",
@@ -520,7 +520,7 @@ func testMemWalletLockedOutputs(r *Harness, t *testing.T) {
 	if err != nil {
 		t.Fatalf("unable to create script: %v", err)
 	}
-	outputAmt := qtumutil.Amount(50 * qtumutil.SatoshiPerBitcoin)
+	outputAmt := xpcutil.Amount(50 * xpcutil.SatoshiPerBitcoin)
 	output := wire.NewTxOut(int64(outputAmt), pkScript)
 	tx, err := r.CreateTransaction([]*wire.TxOut{output}, 10)
 	if err != nil {
@@ -603,7 +603,7 @@ func TestMain(m *testing.M) {
 func TestHarness(t *testing.T) {
 	// We should have (numMatureOutputs * 50 BTC) of mature unspendable
 	// outputs.
-	expectedBalance := qtumutil.Amount(numMatureOutputs * 50 * qtumutil.SatoshiPerBitcoin)
+	expectedBalance := xpcutil.Amount(numMatureOutputs * 50 * xpcutil.SatoshiPerBitcoin)
 	harnessBalance := mainHarness.ConfirmedBalance()
 	if harnessBalance != expectedBalance {
 		t.Fatalf("expected wallet balance of %v instead have %v",

@@ -7,7 +7,7 @@ package blockchain
 import (
 	"testing"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
 )
 
 // TestThresholdStateStringer tests the stringized output for the

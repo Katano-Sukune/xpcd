@@ -7,7 +7,7 @@ package blockchain
 import (
 	"fmt"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
 )
 
 // ThresholdState define the various threshold states used when voting on

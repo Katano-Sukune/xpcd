@@ -14,8 +14,8 @@ import (
 	"strings"
 
 	flags "github.com/jessevdk/go-flags"
-	"github.com/qtumatomicswap/qtumd/btcjson"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/btcjson"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 const (
@@ -26,13 +26,13 @@ const (
 )
 
 var (
-	qtumdHomeDir           = qtumutil.AppDataDir("qtumd", false)
-	ltcctlHomeDir         = qtumutil.AppDataDir("ltcctl", false)
-	qtumwalletHomeDir      = qtumutil.AppDataDir("qtumwallet", false)
+	xpcdHomeDir           = xpcutil.AppDataDir("xpcd", false)
+	ltcctlHomeDir         = xpcutil.AppDataDir("ltcctl", false)
+	xpcwalletHomeDir      = xpcutil.AppDataDir("xpcwallet", false)
 	defaultConfigFile     = filepath.Join(ltcctlHomeDir, "ltcctl.conf")
 	defaultRPCServer      = "localhost"
-	defaultRPCCertFile    = filepath.Join(qtumdHomeDir, "rpc.cert")
-	defaultWalletCertFile = filepath.Join(qtumwalletHomeDir, "rpc.cert")
+	defaultRPCCertFile    = filepath.Join(xpcdHomeDir, "rpc.cert")
+	defaultWalletCertFile = filepath.Join(xpcwalletHomeDir, "rpc.cert")
 )
 
 // listCommands categorizes and lists all of the usable commands along with
@@ -214,9 +214,9 @@ func loadConfig() (*config, []string, error) {
 		// Use config file for RPC server to create default btcctl config
 		var serverConfigPath string
 		if preCfg.Wallet {
-			serverConfigPath = filepath.Join(qtumwalletHomeDir, "qtumwallet.conf")
+			serverConfigPath = filepath.Join(xpcwalletHomeDir, "xpcwallet.conf")
 		} else {
-			serverConfigPath = filepath.Join(qtumdHomeDir, "qtumd.conf")
+			serverConfigPath = filepath.Join(xpcdHomeDir, "xpcd.conf")
 		}
 
 		err := createDefaultConfigFile(preCfg.ConfigFile, serverConfigPath)
@@ -280,8 +280,8 @@ func loadConfig() (*config, []string, error) {
 }
 
 // createDefaultConfig creates a basic config file at the given destination path.
-// For this it tries to read the config file for the RPC server (either qtumd or
-// qtumwallet), and extract the RPC user and password from it.
+// For this it tries to read the config file for the RPC server (either xpcd or
+// xpcwallet), and extract the RPC user and password from it.
 func createDefaultConfigFile(destinationPath, serverConfigPath string) error {
 	// Read the RPC server config
 	serverConfigFile, err := os.Open(serverConfigPath)

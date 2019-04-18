@@ -7,7 +7,7 @@ package main
 import (
 	"log"
 
-	"github.com/qtumatomicswap/qtumd/rpcclient"
+	"github.com/Katano-Sukune/xpcd/rpcclient"
 )
 
 func main() {

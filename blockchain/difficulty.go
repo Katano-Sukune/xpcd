@@ -8,7 +8,7 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
 )
 
 var (

@@ -11,7 +11,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/qtumatomicswap/qtumd/btcjson"
+	"github.com/Katano-Sukune/xpcd/btcjson"
 )
 
 // TestChainSvrCmds tests all of the chain server commands marshal and unmarshal

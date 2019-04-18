@@ -8,8 +8,8 @@ import (
 	"net"
 	"testing"
 
-	"github.com/qtumatomicswap/qtumd/addrmgr"
-	"github.com/qtumatomicswap/qtumd/wire"
+	"github.com/Katano-Sukune/xpcd/addrmgr"
+	"github.com/Katano-Sukune/xpcd/wire"
 )
 
 // TestIPTypes ensures the various functions which determine the type of an IP

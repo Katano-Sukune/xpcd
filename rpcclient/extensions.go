@@ -12,10 +12,10 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/qtumatomicswap/qtumd/btcjson"
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
-	"github.com/qtumatomicswap/qtumd/wire"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/btcjson"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 // FutureDebugLevelResult is a future promise to deliver the result of a
@@ -46,7 +46,7 @@ func (r FutureDebugLevelResult) Receive() (string, error) {
 //
 // See DebugLevel for the blocking version and more details.
 //
-// NOTE: This is a qtumd extension.
+// NOTE: This is a xpcd extension.
 func (c *Client) DebugLevelAsync(levelSpec string) FutureDebugLevelResult {
 	cmd := btcjson.NewDebugLevelCmd(levelSpec)
 	return c.sendCmd(cmd)
@@ -61,7 +61,7 @@ func (c *Client) DebugLevelAsync(levelSpec string) FutureDebugLevelResult {
 // Additionally, the special keyword 'show' can be used to get a list of the
 // available subsystems.
 //
-// NOTE: This is a qtumd extension.
+// NOTE: This is a xpcd extension.
 func (c *Client) DebugLevel(levelSpec string) (string, error) {
 	return c.DebugLevelAsync(levelSpec).Receive()
 }
@@ -127,8 +127,8 @@ func (r FutureListAddressTransactionsResult) Receive() ([]btcjson.ListTransactio
 //
 // See ListAddressTransactions for the blocking version and more details.
 //
-// NOTE: This is a qtumd extension.
-func (c *Client) ListAddressTransactionsAsync(addresses []qtumutil.Address, account string) FutureListAddressTransactionsResult {
+// NOTE: This is a xpcd extension.
+func (c *Client) ListAddressTransactionsAsync(addresses []xpcutil.Address, account string) FutureListAddressTransactionsResult {
 	// Convert addresses to strings.
 	addrs := make([]string, 0, len(addresses))
 	for _, addr := range addresses {
@@ -142,7 +142,7 @@ func (c *Client) ListAddressTransactionsAsync(addresses []qtumutil.Address, acco
 // with the provided addresses.
 //
 // NOTE: This is a btcwallet extension.
-func (c *Client) ListAddressTransactions(addresses []qtumutil.Address, account string) ([]btcjson.ListTransactionsResult, error) {
+func (c *Client) ListAddressTransactions(addresses []xpcutil.Address, account string) ([]btcjson.ListTransactionsResult, error) {
 	return c.ListAddressTransactionsAsync(addresses, account).Receive()
 }
 
@@ -180,7 +180,7 @@ func (r FutureGetBestBlockResult) Receive() (*chainhash.Hash, int32, error) {
 //
 // See GetBestBlock for the blocking version and more details.
 //
-// NOTE: This is a qtumd extension.
+// NOTE: This is a xpcd extension.
 func (c *Client) GetBestBlockAsync() FutureGetBestBlockResult {
 	cmd := btcjson.NewGetBestBlockCmd()
 	return c.sendCmd(cmd)
@@ -189,7 +189,7 @@ func (c *Client) GetBestBlockAsync() FutureGetBestBlockResult {
 // GetBestBlock returns the hash and height of the block in the longest (best)
 // chain.
 //
-// NOTE: This is a qtumd extension.
+// NOTE: This is a xpcd extension.
 func (c *Client) GetBestBlock() (*chainhash.Hash, int32, error) {
 	return c.GetBestBlockAsync().Receive()
 }
@@ -222,7 +222,7 @@ func (r FutureGetCurrentNetResult) Receive() (wire.BitcoinNet, error) {
 //
 // See GetCurrentNet for the blocking version and more details.
 //
-// NOTE: This is a qtumd extension.
+// NOTE: This is a xpcd extension.
 func (c *Client) GetCurrentNetAsync() FutureGetCurrentNetResult {
 	cmd := btcjson.NewGetCurrentNetCmd()
 	return c.sendCmd(cmd)
@@ -230,7 +230,7 @@ func (c *Client) GetCurrentNetAsync() FutureGetCurrentNetResult {
 
 // GetCurrentNet returns the network the server is running on.
 //
-// NOTE: This is a qtumd extension.
+// NOTE: This is a xpcd extension.
 func (c *Client) GetCurrentNet() (wire.BitcoinNet, error) {
 	return c.GetCurrentNetAsync().Receive()
 }

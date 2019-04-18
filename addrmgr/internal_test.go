@@ -7,7 +7,7 @@ package addrmgr
 import (
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/wire"
+	"github.com/Katano-Sukune/xpcd/wire"
 )
 
 func TstKnownAddressIsBad(ka *KnownAddress) bool {

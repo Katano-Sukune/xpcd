@@ -10,11 +10,11 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg"
-	"github.com/qtumatomicswap/qtumd/database"
-	_ "github.com/qtumatomicswap/qtumd/database/ffldb"
-	"github.com/qtumatomicswap/qtumd/wire"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/database"
+	_ "github.com/Katano-Sukune/xpcd/database/ffldb"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 // This example demonstrates creating a new database.
@@ -22,8 +22,8 @@ func ExampleCreate() {
 	// This example assumes the ffldb driver is imported.
 	//
 	// import (
-	// 	"github.com/qtumatomicswap/qtumd/database"
-	// 	_ "github.com/qtumatomicswap/qtumd/database/ffldb"
+	// 	"github.com/Katano-Sukune/xpcd/database"
+	// 	_ "github.com/Katano-Sukune/xpcd/database/ffldb"
 	// )
 
 	// Create a database and schedule it to be closed and removed on exit.
@@ -48,8 +48,8 @@ func Example_basicUsage() {
 	// This example assumes the ffldb driver is imported.
 	//
 	// import (
-	// 	"github.com/qtumatomicswap/qtumd/database"
-	// 	_ "github.com/qtumatomicswap/qtumd/database/ffldb"
+	// 	"github.com/Katano-Sukune/xpcd/database"
+	// 	_ "github.com/Katano-Sukune/xpcd/database/ffldb"
 	// )
 
 	// Create a database and schedule it to be closed and removed on exit.
@@ -114,8 +114,8 @@ func Example_blockStorageAndRetrieval() {
 	// This example assumes the ffldb driver is imported.
 	//
 	// import (
-	// 	"github.com/qtumatomicswap/qtumd/database"
-	// 	_ "github.com/qtumatomicswap/qtumd/database/ffldb"
+	// 	"github.com/Katano-Sukune/xpcd/database"
+	// 	_ "github.com/Katano-Sukune/xpcd/database/ffldb"
 	// )
 
 	// Create a database and schedule it to be closed and removed on exit.
@@ -136,7 +136,7 @@ func Example_blockStorageAndRetrieval() {
 	// and example.
 	err = db.Update(func(tx database.Tx) error {
 		genesisBlock := chaincfg.MainNetParams.GenesisBlock
-		return tx.StoreBlock(qtumutil.NewBlock(genesisBlock))
+		return tx.StoreBlock(xpcutil.NewBlock(genesisBlock))
 	})
 	if err != nil {
 		fmt.Println(err)

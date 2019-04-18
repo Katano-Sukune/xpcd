@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/wire"
+	"github.com/Katano-Sukune/xpcd/wire"
 	"github.com/davecgh/go-spew/spew"
 )
 

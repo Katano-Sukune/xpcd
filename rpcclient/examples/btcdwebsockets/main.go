@@ -10,9 +10,9 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/rpcclient"
-	"github.com/qtumatomicswap/qtumd/wire"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/rpcclient"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 func main() {
@@ -21,7 +21,7 @@ func main() {
 	// for notifications.  See the documentation of the rpcclient
 	// NotificationHandlers type for more details about each handler.
 	ntfnHandlers := rpcclient.NotificationHandlers{
-		OnFilteredBlockConnected: func(height int32, header *wire.BlockHeader, txns []*qtumutil.Tx) {
+		OnFilteredBlockConnected: func(height int32, header *wire.BlockHeader, txns []*xpcutil.Tx) {
 			log.Printf("Block connected: %v (%d) %v",
 				header.BlockHash(), height, header.Timestamp)
 		},
@@ -31,9 +31,9 @@ func main() {
 		},
 	}
 
-	// Connect to local qtumd RPC server using websockets.
-	qtumdHomeDir := qtumutil.AppDataDir("qtumd", false)
-	certs, err := ioutil.ReadFile(filepath.Join(qtumdHomeDir, "rpc.cert"))
+	// Connect to local xpcd RPC server using websockets.
+	xpcdHomeDir := xpcutil.AppDataDir("xpcd", false)
+	certs, err := ioutil.ReadFile(filepath.Join(xpcdHomeDir, "rpc.cert"))
 	if err != nil {
 		log.Fatal(err)
 	}

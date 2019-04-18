@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
 )
 
 // defaultTransactionAlloc is the default size used for the backing array

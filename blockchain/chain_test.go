@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg"
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
-	"github.com/qtumatomicswap/qtumd/wire"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 // TestHaveBlock tests the HaveBlock API to ensure proper functionality.
@@ -25,7 +25,7 @@ func TestHaveBlock(t *testing.T) {
 		"blk_3A.dat.bz2",
 	}
 
-	var blocks []*qtumutil.Block
+	var blocks []*xpcutil.Block
 	for _, file := range testFiles {
 		blockTmp, err := loadBlocks(file)
 		if err != nil {
@@ -62,7 +62,7 @@ func TestHaveBlock(t *testing.T) {
 	}
 
 	// Insert an orphan block.
-	_, isOrphan, err := chain.ProcessBlock(qtumutil.NewBlock(&Block100000),
+	_, isOrphan, err := chain.ProcessBlock(xpcutil.NewBlock(&Block100000),
 		BFNone)
 	if err != nil {
 		t.Errorf("Unable to process block: %v", err)
@@ -139,7 +139,7 @@ func TestCalcSequenceLock(t *testing.T) {
 	// Create a utxo view with a fake utxo for the inputs used in the
 	// transactions created below.  This utxo is added such that it has an
 	// age of 4 blocks.
-	targetTx := qtumutil.NewTx(&wire.MsgTx{
+	targetTx := xpcutil.NewTx(&wire.MsgTx{
 		TxOut: []*wire.TxOut{{
 			PkScript: nil,
 			Value:    10,
@@ -187,7 +187,7 @@ func TestCalcSequenceLock(t *testing.T) {
 
 	// Adding a utxo with a height of 0x7fffffff indicates that the output
 	// is currently unmined.
-	utxoView.AddTxOuts(qtumutil.NewTx(unConfTx), 0x7fffffff)
+	utxoView.AddTxOuts(xpcutil.NewTx(unConfTx), 0x7fffffff)
 
 	tests := []struct {
 		tx      *wire.MsgTx
@@ -422,7 +422,7 @@ func TestCalcSequenceLock(t *testing.T) {
 
 	t.Logf("Running %v SequenceLock tests", len(tests))
 	for i, test := range tests {
-		utilTx := qtumutil.NewTx(test.tx)
+		utilTx := xpcutil.NewTx(test.tx)
 		seqLock, err := chain.CalcSequenceLock(utilTx, test.view, test.mempool)
 		if err != nil {
 			t.Fatalf("test #%d, unable to calc sequence lock: %v", i, err)

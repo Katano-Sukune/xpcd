@@ -10,8 +10,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/qtumatomicswap/qtumd/rpcclient"
-	"github.com/qtumatomicswap/qtumutil"
+	"github.com/Katano-Sukune/xpcd/rpcclient"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/davecgh/go-spew/spew"
 )
 
@@ -21,14 +21,14 @@ func main() {
 	// for notifications.  See the documentation of the rpcclient
 	// NotificationHandlers type for more details about each handler.
 	ntfnHandlers := rpcclient.NotificationHandlers{
-		OnAccountBalance: func(account string, balance qtumutil.Amount, confirmed bool) {
+		OnAccountBalance: func(account string, balance xpcutil.Amount, confirmed bool) {
 			log.Printf("New balance for account %s: %v", account,
 				balance)
 		},
 	}
 
 	// Connect to local btcwallet RPC server using websockets.
-	certHomeDir := qtumutil.AppDataDir("btcwallet", false)
+	certHomeDir := xpcutil.AppDataDir("btcwallet", false)
 	certs, err := ioutil.ReadFile(filepath.Join(certHomeDir, "rpc.cert"))
 	if err != nil {
 		log.Fatal(err)

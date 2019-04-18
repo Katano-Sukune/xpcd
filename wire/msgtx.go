@@ -10,7 +10,7 @@ import (
 	"io"
 	"strconv"
 
-	"github.com/qtumatomicswap/qtumd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
 )
 
 const (
