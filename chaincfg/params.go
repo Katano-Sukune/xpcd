@@ -304,11 +304,11 @@ var MainNetParams = Params{
 
 	// Human-readable part for Bech32 encoded segwit addresses, as defined in
 	// BIP 173.
-	Bech32HRPSegwit: "ltc", // always ltc for main net
+	Bech32HRPSegwit: "xpc", // always ltc for main net
 
 	// Address encoding magics
-	PubKeyHashAddrID:        0x3a, // starts with L
-	ScriptHashAddrID:        0x32, // starts with M
+	PubKeyHashAddrID:        0x4C, // starts with X
+	ScriptHashAddrID:        0x1C, // starts with C
 	PrivateKeyID:            0x80, // starts with 6 (uncompressed) or T (compressed)
 	WitnessPubKeyHashAddrID: 0x06, // starts with p2
 	WitnessScriptHashAddrID: 0x0A, // starts with 7Xh
@@ -380,11 +380,11 @@ var RegressionNetParams = Params{
 
 	// Human-readable part for Bech32 encoded segwit addresses, as defined in
 	// BIP 173.
-	Bech32HRPSegwit: "tltc", // always tltc for test net
+	Bech32HRPSegwit: "xpcrt", // always tltc for test net
 
 	// Address encoding magics
-	PubKeyHashAddrID: 0x78, // starts with m or n
-	ScriptHashAddrID: 0x6e, // starts with 2
+	PubKeyHashAddrID: 0x8a, // starts with m or n
+	ScriptHashAddrID: 0x58, // starts with 2
 	PrivateKeyID:     0xef, // starts with 9 (uncompressed) or c (compressed)
 
 	// BIP32 hierarchical deterministic extended key magics
@@ -464,11 +464,11 @@ var TestNet4Params = Params{
 
 	// Human-readable part for Bech32 encoded segwit addresses, as defined in
 	// BIP 173.
-	Bech32HRPSegwit: "tltc", // always tb for test net
+	Bech32HRPSegwit: "txpc", // always tb for test net
 
 	// Address encoding magics
-	PubKeyHashAddrID:        0x78, // starts with m or n
-	ScriptHashAddrID:        0x6e, // starts with 2
+	PubKeyHashAddrID:        0x8a, // starts with m or n
+	ScriptHashAddrID:        0x58, // starts with 2
 	WitnessPubKeyHashAddrID: 0xef, // starts with QW
 	WitnessScriptHashAddrID: 0x31, // starts with T7n
 	PrivateKeyID:            0xef, // starts with 9 (uncompressed) or c (compressed)
